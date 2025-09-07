@@ -71,7 +71,7 @@ for SHP in `find $SCPDIR -type f -regex ".*shp$" | sed 's/\.shp//g'`; do
         EPSG=$(python identifyEPSG.py "$PROJ")
 	ogr2ogr -append -f SQLite -dsco SPATIALITE=YES -nlt PROMOTE_TO_MULTI $OUTDB $SHP.shp # -select MC_ID,C_ID,SCP_UID  $WORKDIR/$(basename $SHP.shp) $SHP.shp
         #spatialite -silent $OUTDB ".loadshp $WORKDIR/$(basename $SHP) $TBL UTF-8 $EPSG geometry"
-        printf "SELECT ST_Transform(GEOMETRY,4326) as geometry,MC_ID as mc_id,'$GID' AS GID FROM ${TBL} UNION ALL " >> $SQL
+        printf "SELECT ST_Transform(GEOMETRY,4326) as geometry,macroclass as mc_id,'$GID' AS GID FROM ${TBL} UNION ALL " >> $SQL
     fi
 done
 
